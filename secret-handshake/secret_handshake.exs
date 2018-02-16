@@ -15,16 +15,32 @@ defmodule SecretHandshake do
   """
   @spec commands(code :: integer) :: list(String.t())
   def commands(code) do
-    rdigits = Enum.reverse(Integer.digits(code,2))
-    list = []
-    if Enum.at(rdigits, 0) == 1, do: list = list ++ ["wink"]
-    if Enum.at(rdigits, 1) == 1, do: list = list ++ ["double blink"]
-    if Enum.at(rdigits, 2) == 1, do: list = list ++ ["close your eyes"]
-    if Enum.at(rdigits, 3) == 1, do: list = list ++ ["jump"]
-    if Enum.at(rdigits, 4) == 1, do: list = Enum.reverse(list)
-    list
+    c_helper(get_binary(code), [])
   end
 
+  def get_binary(code) do
+    Integer.digits(code,2)
+  end
+
+  def c_helper([], c_list) do
+    if List.last(c_list) == "reverse" do
+      Enum.reverse(c_list--["reverse"])
+    else
+      c_list
+    end
+  end
+
+  def c_helper([_head|tail], c_list) when length(tail) > 4, do: c_helper(tail,c_list)
+
+  def c_helper([head|tail], c_list) do
+    command = ["reverse", "jump", "close your eyes", "double blink", "wink"] 
+    
+    if head == 1 do
+      c_helper(tail, [Enum.at(command, 4-length(tail)) | c_list])
+    else
+      c_helper(tail, c_list)
+    end
+  end
 end
 
 # SecretHandshake.commands(12) |> IO.inspect
