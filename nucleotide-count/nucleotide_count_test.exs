@@ -10,35 +10,35 @@ defmodule NucleotideCountTest do
 
   # @tag :pending
   test "empty dna string has no adenine" do
-    assert NucleotideCount.count('', ?A) == 0
+    assert NucleotideCount.count('', ?A) == 0 |> IO.inspect
   end
 
-  @tag :pending
+  #@tag :pending
   test "repetitive cytosine gets counted" do
-    assert NucleotideCount.count('CCCCC', ?C) == 5
+    assert NucleotideCount.count('CCCCC', ?C) == 5 |> IO.inspect
   end
 
-  @tag :pending
+  #@tag :pending
   test "counts only thymine" do
-    assert NucleotideCount.count('GGGGGTAACCCGG', ?T) == 1
+    assert NucleotideCount.count('GGGGGTAACCCGG', ?T) == 1 |> IO.inspect
   end
 
-  @tag :pending
+  #@tag :pending
   test "empty dna string has no nucleotides" do
     expected = %{?A => 0, ?T => 0, ?C => 0, ?G => 0}
-    assert NucleotideCount.histogram('') == expected
+    assert NucleotideCount.histogram('') == expected |> IO.inspect
   end
 
-  @tag :pending
+  #@tag :pending
   test "repetitive sequence has only guanine" do
     expected = %{?A => 0, ?T => 0, ?C => 0, ?G => 8}
-    assert NucleotideCount.histogram('GGGGGGGG') == expected
+    assert NucleotideCount.histogram('GGGGGGGG') == expected |> IO.inspect
   end
 
-  @tag :pending
+  #@tag :pending
   test "counts all nucleotides" do
     s = 'AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'
     expected = %{?A => 20, ?T => 21, ?C => 12, ?G => 17}
-    assert NucleotideCount.histogram(s) == expected
+    assert NucleotideCount.histogram(s) == expected |> IO.inspect
   end
 end
